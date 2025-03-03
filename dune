@@ -1,0 +1,5 @@
+(executable
+ (name openai_demo)
+ (libraries devkit ppx_yojson_conv_lib)
+ (preprocess
+  (pps ppx_deriving_jsonschema ppx_yojson_conv)))
