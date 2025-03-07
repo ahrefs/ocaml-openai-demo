@@ -163,7 +163,7 @@ let math_tutor_request user_prompt =
 
 ## Processing the structured response
 
-The remaining task is to retrieve the steps and display them. OpenAI has the ability to return multiple versions of its answer, calling it choices. Here we will only process the first choice for simplicity.
+The remaining task is to retrieve the steps and display them. OpenAI has the ability to return multiple versions of its answer, calling it choices. Here we will only process once choice for simplicity.
 
 ```ocaml
 let extract_steps { OpenAI.Response.message = { content }; _ } =
