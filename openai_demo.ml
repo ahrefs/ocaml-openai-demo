@@ -1,5 +1,4 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
-open Devkit
 
 let api_key = Sys.getenv "OPENAI_API_KEY"
 
@@ -52,12 +51,10 @@ module OpenAI = struct
         Printf.eprintf "Body: %s\n" body)
     in
     let headers = [ "Authorization: Bearer " ^ api_key ] in
-    match Web.http_request ~headers ~body `POST "https://api.openai.com/v1/chat/completions" with
+    match Devkit.Web.http_request ~headers ~body `POST "https://api.openai.com/v1/chat/completions" with
     | `Error e -> Error e
     | `Ok response ->
-    try
-      let json = Yojson.Safe.from_string response in
-      Ok (Response.response_of_yojson json)
+    try Ok (response |> Yojson.Safe.from_string |> Response.response_of_yojson)
     with exn -> Error (Printf.sprintf "error while parsing the response %s: %S" (Printexc.to_string exn) response)
 end
 
